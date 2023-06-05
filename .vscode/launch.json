@@ -1,5 +1,12 @@
 {
-    "configurations": [          
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CaculatorApp",
+            "request": "launch",
+            "mainClass": "job04.CaculatorApp",
+            "projectName": "app"
+        },
         {
             "type": "java",
             "name": "App",
