@@ -1,9 +1,6 @@
 package job04;
 
-
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -11,8 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import job04.classes.DisplayNumber;
-
+import job04.classes.MainController;
 public class CaculatorApp extends Application {
 
     private TextField displayField;
@@ -28,81 +24,26 @@ public class CaculatorApp extends Application {
 
         // Création des boutons numériques et opérationnels
         Button button1 = createButton("1");
-        button1.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DisplayNumber.displayNumber(button1.getText(),displayField);
-            }
-        });
         Button button2 = createButton("2");
-        button2.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DisplayNumber.displayNumber(button2.getText(),displayField);
-            }
-        });
         Button button3 = createButton("3");
-        button3.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DisplayNumber.displayNumber(button3.getText(),displayField);
-            }
-        });
         Button button4 = createButton("4");
-        button4.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DisplayNumber.displayNumber(button4.getText(),displayField);
-            }
-        });
         Button button5 = createButton("5");
-        button5.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DisplayNumber.displayNumber(button5.getText(),displayField);
-            }
-        });
         Button button6 = createButton("6");
-        button6.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DisplayNumber.displayNumber(button6.getText(),displayField);
-            }
-        });
         Button button7 = createButton("7");
-        button7.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DisplayNumber.displayNumber(button7.getText(),displayField);
-            }
-        });
         Button button8 = createButton("8");
-        button8.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DisplayNumber.displayNumber(button8.getText(),displayField);
-            }
-        });
         Button button9 = createButton("9");
-        button9.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DisplayNumber.displayNumber(button9.getText(),displayField);
-            }
-        });
         Button button0 = createButton("0");
-        button0.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DisplayNumber.displayNumber(button0.getText(),displayField);
-            }
-        });
         Button buttonAdd = createButton("+");
         Button buttonSubtract = createButton("-");
+        Button buttonEquals = createButton("=");
         Button buttonMultiply = createButton("*");
         Button buttonDivide = createButton("/");
-        Button buttonEquals = createButton("=");
-        Button buttonPercentage = createButton("%");
+        
+        Button buttonC = createButton("C");
+        Button buttonAC = createButton("AC");
+        Button buttonRebate = createButton("rebate %");
+        Button buttonIncrease = createButton("increase %");
+        Button buttonPartOf = createButton("part of");
 
         // Configuration de la disposition en grille
         GridPane gridPane = new GridPane();
@@ -127,8 +68,33 @@ public class CaculatorApp extends Application {
         gridPane.add(buttonMultiply, 3, 3);
         gridPane.add(button0, 0, 4);
         gridPane.add(buttonEquals, 1, 4);
-        gridPane.add(buttonPercentage, 2, 4);
+        gridPane.add(buttonC, 2, 4);
         gridPane.add(buttonDivide, 3, 4);
+        gridPane.add(buttonAC ,4,4 );
+        gridPane.add(buttonRebate ,4,3 );
+        gridPane.add(buttonIncrease ,4,2 );
+        gridPane.add(buttonPartOf ,4,1 );
+
+
+        // Gestion des événements des boutons
+        button1.setOnAction(e -> appendToDisplay("1"));
+        button2.setOnAction(e -> appendToDisplay("2"));
+        button3.setOnAction(e -> appendToDisplay("3"));
+        button4.setOnAction(e -> appendToDisplay("4"));
+        button5.setOnAction(e -> appendToDisplay("5"));
+        button6.setOnAction(e -> appendToDisplay("6"));
+        button7.setOnAction(e -> appendToDisplay("7"));
+        button8.setOnAction(e -> appendToDisplay("8"));
+        button9.setOnAction(e -> appendToDisplay("9"));
+        button0.setOnAction(e -> appendToDisplay("0"));
+
+        buttonAdd.setOnAction(e -> MainController.handleOperatorClick("+",displayField));
+        buttonSubtract.setOnAction(e -> MainController.handleOperatorClick("-",displayField));
+        buttonEquals.setOnAction(e -> MainController.calculateResult(displayField));
+        buttonMultiply.setOnAction(e -> MainController.handleOperatorClick("*",displayField));
+        buttonDivide.setOnAction(e -> MainController.handleOperatorClick("/",displayField));
+        buttonC.setOnAction(e -> MainController.ResetActualNumber(displayField));
+        buttonAC.setOnAction(e -> MainController.ResetAllClear(displayField));
 
         // Création de la scène
         Scene scene = new Scene(gridPane, 300, 250);
@@ -145,7 +111,24 @@ public class CaculatorApp extends Application {
         return button;
     }
 
+    // Méthode pour ajouter du texte au champ d'affichage
+    private void appendToDisplay(String text) {
+        displayField.setText(displayField.getText() + text);
+    }
+
+    
+
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 }
+
+
+
+
+
+
+
+
+
+       
