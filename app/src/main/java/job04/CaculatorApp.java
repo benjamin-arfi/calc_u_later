@@ -125,4 +125,3 @@ public class CaculatorApp extends Application {
         launch(args);
     }
 }
-
