@@ -47,6 +47,7 @@ public class CaculatorApp extends Application {
         Button buttonAC = createButton("AC");
         Button buttonRebate = createButton("rebate %");
         Button buttonIncrease = createButton("increase %");
+        buttonIncrease.setMinSize(130,120);
         Button buttonPartOf = createButton("part of");
         Button buttonMemory = createButton("MS");
         Button buttonMemoryRead = createButton("MR");
