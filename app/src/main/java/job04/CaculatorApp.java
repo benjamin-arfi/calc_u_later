@@ -9,9 +9,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import job04.classes.MainController;
+import job04.classes.MemorySave;
 public class CaculatorApp extends Application {
 
     private TextField displayField;
+    private TextField memoryField;
 
     @Override
     public void start(Stage primaryStage) {
@@ -21,6 +23,8 @@ public class CaculatorApp extends Application {
         displayField = new TextField();
         displayField.setEditable(false);
         displayField.setAlignment(Pos.CENTER_RIGHT);
+        memoryField = new TextField();
+        memoryField.setEditable(false);
 
         // Création des boutons numériques et opérationnels
         Button button1 = createButton("1");
@@ -44,6 +48,9 @@ public class CaculatorApp extends Application {
         Button buttonRebate = createButton("rebate %");
         Button buttonIncrease = createButton("increase %");
         Button buttonPartOf = createButton("part of");
+        Button buttonMemory = createButton("MS");
+        Button buttonMemoryRead = createButton("MR");
+        Button buttonMemoryClear = createButton("MC");
 
         // Configuration de la disposition en grille
         GridPane gridPane = new GridPane();
@@ -71,9 +78,13 @@ public class CaculatorApp extends Application {
         gridPane.add(buttonC, 2, 4);
         gridPane.add(buttonDivide, 3, 4);
         gridPane.add(buttonAC ,4,4 );
-        gridPane.add(buttonRebate ,4,3 );
-        gridPane.add(buttonIncrease ,4,2 );
-        gridPane.add(buttonPartOf ,4,1 );
+        gridPane.add(buttonRebate ,4,3, 2, 1 );
+        gridPane.add(buttonIncrease ,4,2, 2, 1 );
+        gridPane.add(buttonPartOf ,4,1, 2, 1 );
+        gridPane.add(buttonMemory ,5,4 );
+        gridPane.add(buttonMemoryRead ,4,5 );
+        gridPane.add(buttonMemoryClear ,5,5 );
+        gridPane.add(memoryField, 4, 0, 2, 1);
 
 
         // Gestion des événements des boutons
@@ -96,6 +107,9 @@ public class CaculatorApp extends Application {
         buttonRebate.setOnAction(e -> MainController.handleOperatorClick("rebate %",displayField));
         buttonIncrease.setOnAction(e -> MainController.handleOperatorClick("increase %",displayField));
         buttonPartOf.setOnAction(e -> MainController.handleOperatorClick("part of",displayField));
+        buttonMemory.setOnAction(e -> MemorySave.memorySave(displayField.getText(),memoryField,displayField));
+        buttonMemoryRead.setOnAction(e -> MemorySave.memoryRead(displayField));
+        buttonMemoryClear.setOnAction(e -> MemorySave.memoryClear(memoryField));
         buttonC.setOnAction(e -> MainController.ResetActualNumber(displayField));
         buttonAC.setOnAction(e -> MainController.ResetAllClear(displayField));
 
