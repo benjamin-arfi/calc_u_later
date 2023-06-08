@@ -3,14 +3,19 @@ package job04;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import job04.classes.MainController;
 import job04.classes.MemorySave;
-public class CaculatorApp extends Application {
+public class BasicCalculatorApp extends Application {
 
     private TextField displayField;
     private TextField memoryField;
@@ -24,7 +29,10 @@ public class CaculatorApp extends Application {
         displayField.setEditable(false);
         displayField.setAlignment(Pos.CENTER_RIGHT);
         memoryField = new TextField();
+        memoryField.setPrefWidth(100);
         memoryField.setEditable(false);
+
+       
 
         // Création des boutons numériques et opérationnels
         Button button1 = createButton("1");
@@ -46,19 +54,45 @@ public class CaculatorApp extends Application {
         Button buttonC = createButton("C");
         Button buttonAC = createButton("AC");
         Button buttonRebate = createButton("rebate %");
+        buttonRebate.setMinWidth(100);
         Button buttonIncrease = createButton("increase %");
-        buttonIncrease.setMinSize(130,120);
+        buttonIncrease.setMinSize(100,20);
         Button buttonPartOf = createButton("part of");
+        buttonPartOf.setMinWidth(100);
         Button buttonMemory = createButton("MS");
         Button buttonMemoryRead = createButton("MR");
         Button buttonMemoryClear = createButton("MC");
 
         // Configuration de la disposition en grille
         GridPane gridPane = new GridPane();
+         //création du menu
+        MenuBar menuBar = new MenuBar();
+        VBox vBox = new VBox(menuBar);        
+        Menu menuFile = new Menu("Calculator sort");
+         MenuItem menuItemBasicCalculator = new MenuItem("Basic Calculator");
+         MenuItem menuItemScientificCalculator = new MenuItem("Scientific Calculator");
+         menuFile.getItems().addAll(menuItemBasicCalculator, menuItemScientificCalculator);
+         menuBar.getMenus().add(menuFile);
+ 
+ 
+         // Gestion des événements du menu
+         menuItemBasicCalculator.setOnAction(e -> {
+            ScientificCalculatorApp.BasicDisplay(gridPane,displayField);
+            gridPane.add(buttonRebate,4,3, 2, 1);
+            gridPane.add(buttonIncrease,4,2, 2, 1);
+            gridPane.add(buttonPartOf,4,1, 2, 1);
+         });
+        menuItemScientificCalculator.setOnAction(e -> {
+            ScientificCalculatorApp scientificCalculatorApp = new ScientificCalculatorApp();
+            scientificCalculatorApp.ScientificDisplay(gridPane,displayField);
+         });
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setHgap(10);
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(10));
+        gridPane.setLayoutY(20);
+
+        
 
         // Ajout des boutons à la grille
         gridPane.add(displayField, 0, 0, 4, 1);
@@ -78,14 +112,14 @@ public class CaculatorApp extends Application {
         gridPane.add(buttonEquals, 1, 4);
         gridPane.add(buttonC, 2, 4);
         gridPane.add(buttonDivide, 3, 4);
-        gridPane.add(buttonAC ,4,4 );
+        gridPane.add(buttonAC ,0,5 );
         gridPane.add(buttonRebate ,4,3, 2, 1 );
         gridPane.add(buttonIncrease ,4,2, 2, 1 );
         gridPane.add(buttonPartOf ,4,1, 2, 1 );
-        gridPane.add(buttonMemory ,5,4 );
-        gridPane.add(buttonMemoryRead ,4,5 );
-        gridPane.add(buttonMemoryClear ,5,5 );
-        gridPane.add(memoryField, 4, 0, 2, 1);
+        gridPane.add(buttonMemory ,1,5 );
+        gridPane.add(buttonMemoryRead ,3,5 );
+        gridPane.add(buttonMemoryClear ,2,5 );
+        gridPane.add(memoryField, 4, 0);
 
 
         // Gestion des événements des boutons
@@ -115,11 +149,14 @@ public class CaculatorApp extends Application {
         buttonAC.setOnAction(e -> MainController.ResetAllClear(displayField));
 
         // Création de la scène
-        Scene scene = new Scene(gridPane, 300, 250);
+        Group root = new Group(vBox,gridPane);
+        Scene scene = new Scene(root);
 
         // Appliquer la scène à la fenêtre principale
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        
     }
 
     // Méthode utilitaire pour créer un bouton avec un texte spécifique
@@ -133,7 +170,6 @@ public class CaculatorApp extends Application {
     private void appendToDisplay(String text) {
         displayField.setText(displayField.getText() + text);
     }
-
     
 
     public static void main(String[] args) {
