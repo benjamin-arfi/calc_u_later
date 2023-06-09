@@ -5,7 +5,6 @@ import javafx.scene.layout.GridPane;
 import job04.classes.MainController;
 
 
-
 public class ScientificCalculatorApp  {
     
     public static void BasicDisplay(GridPane gridPane,TextField displayField) {
