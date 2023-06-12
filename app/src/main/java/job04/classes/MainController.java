@@ -7,6 +7,7 @@ public class MainController {
     private static String signoperator;
     private static double operand2;
 	private static double operand;
+	private static double result;
 
 	public static void handleOperatorClick(String operator,TextField displayField) {
 		operand1 = Double.parseDouble(displayField.getText());
@@ -21,9 +22,9 @@ public class MainController {
 	
 	
 	// Méthode pour effectuer le calcul et afficher le résultat
-	public static void calculateResult(TextField displayField) {
+	public static CalculationResult calculateResult(TextField displayField) {
 		operand2 = Double.parseDouble(displayField.getText());
-		double result = 0;
+		result = 0;
 	
 		if (signoperator.equals("+")) {
 			result = operand1 + operand2;
@@ -45,9 +46,10 @@ public class MainController {
 	
 	
 		displayField.setText(String.valueOf(result));
+		return new CalculationResult(operand1, operand2,result, signoperator);
 	}
 	
-	public static void calculateOperatorUnaryClick(String operator,TextField displayField) {
+	public static CalculationResultUnary calculateOperatorUnaryClick(String operator,TextField displayField) {
 		operand1 = Double.parseDouble(displayField.getText());
 		double result = 0;
 		signoperator = operator;
@@ -72,6 +74,7 @@ public class MainController {
         
 	
 		displayField.setText(String.valueOf(result));
+		return new CalculationResultUnary(operand1,result,signoperator);
 	}
 
 	public static void ResetAllClear(TextField displayField) {

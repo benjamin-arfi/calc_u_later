@@ -1,12 +1,16 @@
 package job04;
 
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -14,12 +18,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import job04.classes.CalculationResult;
 import job04.classes.MainController;
 import job04.classes.MemorySave;
 public class BasicCalculatorApp extends Application {
 
     private TextField displayField;
     private TextField memoryField;
+    private List<String> historiqueCalculs;
+    
 
     @Override
     public void start(Stage primaryStage) {
@@ -32,6 +39,10 @@ public class BasicCalculatorApp extends Application {
         memoryField = new TextField();
         memoryField.setPrefWidth(100);
         memoryField.setEditable(false);
+
+        // Initialisation de l'historique des calculs
+        historiqueCalculs = new ArrayList<>();
+        ListView<String> historiqueListView = new ListView<>();
 
        
 
@@ -66,7 +77,7 @@ public class BasicCalculatorApp extends Application {
 
         // Configuration de la disposition en grille
         GridPane gridPane = new GridPane();
-         //création du menu
+        //création du menu
         MenuBar menuBar = new MenuBar();
         VBox vBox = new VBox(menuBar);        
         Menu menuFile = new Menu("Calculator sort");
@@ -82,10 +93,12 @@ public class BasicCalculatorApp extends Application {
             gridPane.add(buttonRebate,4,3, 2, 1);
             gridPane.add(buttonIncrease,4,2, 2, 1);
             gridPane.add(buttonPartOf,4,1, 2, 1);
+            gridPane.add(historiqueListView,5,0, 1, 7);
          });
         menuItemScientificCalculator.setOnAction(e -> {
             ScientificCalculatorApp scientificCalculatorApp = new ScientificCalculatorApp();
             scientificCalculatorApp.ScientificDisplay(gridPane,displayField);
+            
          });
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setHgap(10);
@@ -121,6 +134,7 @@ public class BasicCalculatorApp extends Application {
         gridPane.add(buttonMemoryRead ,3,5 );
         gridPane.add(buttonMemoryClear ,2,5 );
         gridPane.add(memoryField, 4, 0);
+        gridPane.add(historiqueListView, 5, 0, 1, 7);
 
 
         // Gestion des événements des boutons
@@ -137,7 +151,20 @@ public class BasicCalculatorApp extends Application {
 
         buttonAdd.setOnAction(e -> MainController.handleOperatorClick("+",displayField));
         buttonSubtract.setOnAction(e -> MainController.handleOperatorClick("-",displayField));
-        buttonEquals.setOnAction(e -> MainController.calculateResult(displayField));
+        buttonEquals.setOnAction(e ->{
+        // Ajouter l'expression et le résultat à l'historique
+        CalculationResult print = MainController.calculateResult(displayField);
+        double operand1 = print.getOperand1();
+        double operand2 = CalculationResult.getOperand2();
+        String signOperator = print.getSignOperator();
+        double result = print.getresult();
+
+        String calcul = operand1 + signOperator + operand2 + " = " + result;
+        historiqueCalculs.add(calcul);
+
+        // Mettre à jour la ListView de l'historique des calculs
+        historiqueListView.setItems(FXCollections.observableArrayList(historiqueCalculs));
+    });
         buttonMultiply.setOnAction(e -> MainController.handleOperatorClick("*",displayField));
         buttonDivide.setOnAction(e -> MainController.handleOperatorClick("/",displayField));
         buttonRebate.setOnAction(e -> MainController.handleOperatorClick("rebate %",displayField));
@@ -155,9 +182,7 @@ public class BasicCalculatorApp extends Application {
 
         // Appliquer la scène à la fenêtre principale
         primaryStage.setScene(scene);
-        primaryStage.show();
-
-        
+        primaryStage.show();   
     }
 
     // Méthode utilitaire pour créer un bouton avec un texte spécifique
@@ -174,6 +199,6 @@ public class BasicCalculatorApp extends Application {
     
 
     public static void main(String[] args) {
-        launch(args);
+        launch();
     }
 }
