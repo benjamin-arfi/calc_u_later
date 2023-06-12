@@ -3,11 +3,17 @@ package job04;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import job04.classes.ConversionDisplay;
 import job04.classes.MainController;
 import job04.classes.MemorySave;
 public class CaculatorApp extends Application {
@@ -18,7 +24,26 @@ public class CaculatorApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Calculatrice");
+        
+        
+        
+        Menu convertMenu = new Menu("Convert");
 
+        MenuItem menuItemMasses = new MenuItem("Masses");
+        MenuItem menuItemLongueur = new MenuItem("Longueur");
+        MenuItem menuItemTemperature = new MenuItem("Temperature");
+        MenuItem menuItemVolumes = new MenuItem("Volumes");
+        
+
+        convertMenu.getItems().add(menuItemMasses);
+        convertMenu.getItems().add(menuItemLongueur);
+        convertMenu.getItems().add(menuItemTemperature);
+        convertMenu.getItems().add(menuItemVolumes);
+
+        MenuBar menuBar = new MenuBar();
+        menuBar.getMenus().add(convertMenu);
+
+        VBox vBox = new VBox(menuBar);
         // Création du champ d'affichage
         displayField = new TextField();
         displayField.setEditable(false);
@@ -54,10 +79,12 @@ public class CaculatorApp extends Application {
 
         // Configuration de la disposition en grille
         GridPane gridPane = new GridPane();
-        gridPane.setAlignment(Pos.CENTER);
+        gridPane.setMaxSize(400, 200);
+        gridPane.setPadding(new Insets(10));
+        gridPane.setLayoutY(20);
         gridPane.setHgap(10);
         gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(10));
+        
 
         // Ajout des boutons à la grille
         gridPane.add(displayField, 0, 0, 4, 1);
@@ -88,6 +115,8 @@ public class CaculatorApp extends Application {
 
 
         // Gestion des événements des boutons
+        
+
         button1.setOnAction(e -> appendToDisplay("1"));
         button2.setOnAction(e -> appendToDisplay("2"));
         button3.setOnAction(e -> appendToDisplay("3"));
@@ -114,10 +143,28 @@ public class CaculatorApp extends Application {
         buttonAC.setOnAction(e -> MainController.ResetAllClear(displayField));
 
         // Création de la scène
-        Scene scene = new Scene(gridPane, 300, 250);
+        Group root = new Group(vBox,gridPane);
+        Scene scene = new Scene(root);
 
+        menuItemMasses.setOnAction(e -> {
+            String masses[] ={ "Kilogrammes", "Grammes", "Livres","Onces" };
+            ConversionDisplay.display(masses,gridPane,displayField,primaryStage);
+        });
+        menuItemLongueur.setOnAction(e -> {
+            String longueurs[] ={ "Centimètres", "Pouces", "Mètres", "Pieds" };
+            ConversionDisplay.display(longueurs,gridPane,displayField,primaryStage);
+        });
+        menuItemTemperature.setOnAction(e -> {
+            String temperature[] ={ "Celsius", "Fahrenheit", "Kelvin" };
+            ConversionDisplay.display(temperature,gridPane,displayField,primaryStage);
+        });
+        menuItemVolumes.setOnAction(e -> {
+            String volumes[] ={ "Litres", "Gallons", "Mètres cubes", "Pieds cubes" };
+            ConversionDisplay.display(volumes,gridPane,displayField,primaryStage);
+        });
         // Appliquer la scène à la fenêtre principale
         primaryStage.setScene(scene);
+        
         primaryStage.show();
     }
 
