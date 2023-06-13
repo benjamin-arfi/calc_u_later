@@ -233,6 +233,17 @@ public class BasicCalculatorApp extends Application {
         buttonMemoryClear.setOnAction(e -> MemorySave.memoryClear(memoryField));
         buttonC.setOnAction(e -> MainController.ResetActualNumber(displayField));
         buttonAC.setOnAction(e -> MainController.ResetAllClear(displayField));
+     historiqueListView.setOnMouseClicked(event -> {
+    String calculSelectionne = historiqueListView.getSelectionModel().getSelectedItem();
+    if (calculSelectionne != null) {
+        String[] parts = calculSelectionne.split(" = ");
+        if (parts.length == 2) {
+            String calcul = parts[0];
+            String resultat = parts[1];
+            displayField.setText(calcul);
+        }
+    }
+});
 
         // Création de la scène
         
