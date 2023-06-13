@@ -1,5 +1,4 @@
 package job04;
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -12,9 +11,6 @@ import job04.classes.MainController;
 
 
 public class ScientificCalculatorApp  {
-    
-    List<String> historiqueCalculs = new ArrayList<>();
-    ListView<String> historiqueListView = new ListView<>();
     
     public static void BasicDisplay(GridPane gridPane,TextField displayField) {
 
@@ -29,7 +25,7 @@ public class ScientificCalculatorApp  {
 
     
     }
-    public void ScientificDisplay(GridPane gridPane,TextField displayField) {
+    public void ScientificDisplay(GridPane gridPane,TextField displayField,List<String> historiqueCalculs,ListView<String> historiqueListView) {
 
         gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 4 && GridPane.getRowIndex(node) == 3);
         gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 4 && GridPane.getRowIndex(node) == 2);

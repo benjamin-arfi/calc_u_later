@@ -26,16 +26,95 @@ public class BasicCalculatorApp extends Application {
 
     private TextField displayField;
     private TextField memoryField;
-    private List<String> historiqueCalculs;
-    
+    private List<String> historiqueCalculs = new ArrayList<>();;
+    private ListView<String> historiqueListView = new ListView<>();
 
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Calculatrice");
+        // Configuration de la disposition en grille
+        GridPane gridPane = new GridPane();
+        //création du menu
+        MenuBar menuBar = new MenuBar();
         
-        
+        VBox vBox = new VBox(menuBar);        
+        Menu menuFile = new Menu("Calculator sort");
+         MenuItem menuItemBasicCalculator = new MenuItem("Basic Calculator");
+         MenuItem menuItemScientificCalculator = new MenuItem("Scientific Calculator");
+         menuFile.getItems().addAll(menuItemBasicCalculator, menuItemScientificCalculator);
+         Menu convertMenu = new Menu("Convert");
+
+        MenuItem menuItemMasses = new MenuItem("Masses");
+        MenuItem menuItemLongueur = new MenuItem("Longueur");
+        MenuItem menuItemTemperature = new MenuItem("Temperature");
+        MenuItem menuItemVolumes = new MenuItem("Volumes");
         
 
+        convertMenu.getItems().addAll(menuItemMasses,menuItemLongueur,menuItemTemperature,menuItemVolumes);
+        menuBar.getMenus().addAll(menuFile,convertMenu);
+ 
+ 
+         // Gestion des événements du menu
+         menuItemBasicCalculator.setOnAction(e -> {
+            gridPane.getChildren().clear();
+            addDisplay(primaryStage,gridPane);
+            primaryStage.sizeToScene();
+         });
+        menuItemScientificCalculator.setOnAction(e -> {
+            gridPane.getChildren().clear();
+            addDisplay(primaryStage,gridPane);
+            ScientificCalculatorApp scientificCalculatorApp = new ScientificCalculatorApp();
+            scientificCalculatorApp.ScientificDisplay(gridPane,displayField,historiqueCalculs,historiqueListView);
+            primaryStage.sizeToScene();
+            
+         });
+         menuItemMasses.setOnAction(e -> {
+            String masses[] ={ "Kilogrammes", "Grammes", "Livres","Onces" };
+            gridPane.getChildren().clear();
+            addDisplay(primaryStage,gridPane);
+            ConversionDisplay.display(masses,gridPane,displayField,primaryStage);
+        });
+        menuItemLongueur.setOnAction(e -> {
+            String longueurs[] ={ "Centimètres", "Pouces", "Mètres", "Pieds" };
+            gridPane.getChildren().clear();
+            addDisplay(primaryStage,gridPane);
+            ConversionDisplay.display(longueurs,gridPane,displayField,primaryStage);
+        });
+        menuItemTemperature.setOnAction(e -> {
+            String temperature[] ={ "Celsius", "Fahrenheit", "Kelvin" };
+            gridPane.getChildren().clear();
+            addDisplay(primaryStage,gridPane);
+            ConversionDisplay.display(temperature,gridPane,displayField,primaryStage);
+        });
+        menuItemVolumes.setOnAction(e -> {
+            String volumes[] ={ "Litres", "Gallons", "Mètres cubes", "Pieds cubes" };
+            gridPane.getChildren().clear();
+            addDisplay(primaryStage,gridPane);
+            ConversionDisplay.display(volumes,gridPane,displayField,primaryStage);
+        });
+        addDisplay(primaryStage, gridPane);
+
+        Group root = new Group(vBox,gridPane);
+        Scene scene = new Scene(root);
+
+        // Appliquer la scène à la fenêtre principale
+        primaryStage.setScene(scene);
+        primaryStage.show();   
+    }
+
+    // Méthode utilitaire pour créer un bouton avec un texte spécifique
+    private Button createButton(String text) {
+        Button button = new Button(text);
+        button.setPrefSize(70, 30);
+        return button;
+    }
+
+    // Méthode pour ajouter du texte au champ d'affichage
+    private void appendToDisplay(String text) {
+        displayField.setText(displayField.getText() + text);
+    }
+
+    private void addDisplay(Stage primaryStage,GridPane gridPane) {
         // Création du champ d'affichage
         displayField = new TextField();
         displayField.setEditable(false);
@@ -45,8 +124,6 @@ public class BasicCalculatorApp extends Application {
         memoryField.setEditable(false);
 
         // Initialisation de l'historique des calculs
-        historiqueCalculs = new ArrayList<>();
-        ListView<String> historiqueListView = new ListView<>();
 
        
 
@@ -79,57 +156,8 @@ public class BasicCalculatorApp extends Application {
         Button buttonMemoryRead = createButton("MR");
         Button buttonMemoryClear = createButton("MC");
 
-        // Configuration de la disposition en grille
-        GridPane gridPane = new GridPane();
-        //création du menu
-        MenuBar menuBar = new MenuBar();
         
-        VBox vBox = new VBox(menuBar);        
-        Menu menuFile = new Menu("Calculator sort");
-         MenuItem menuItemBasicCalculator = new MenuItem("Basic Calculator");
-         MenuItem menuItemScientificCalculator = new MenuItem("Scientific Calculator");
-         menuFile.getItems().addAll(menuItemBasicCalculator, menuItemScientificCalculator);
-         Menu convertMenu = new Menu("Convert");
-
-        MenuItem menuItemMasses = new MenuItem("Masses");
-        MenuItem menuItemLongueur = new MenuItem("Longueur");
-        MenuItem menuItemTemperature = new MenuItem("Temperature");
-        MenuItem menuItemVolumes = new MenuItem("Volumes");
         
-
-        convertMenu.getItems().addAll(menuItemMasses,menuItemLongueur,menuItemTemperature,menuItemVolumes);
-        menuBar.getMenus().addAll(menuFile,convertMenu);
- 
- 
-         // Gestion des événements du menu
-         menuItemBasicCalculator.setOnAction(e -> {
-            ScientificCalculatorApp.BasicDisplay(gridPane,displayField);
-            gridPane.add(buttonRebate,4,3, 2, 1);
-            gridPane.add(buttonIncrease,4,2, 2, 1);
-            gridPane.add(buttonPartOf,4,1, 2, 1);
-            gridPane.add(historiqueListView,5,0, 1, 7);
-         });
-        menuItemScientificCalculator.setOnAction(e -> {
-            ScientificCalculatorApp scientificCalculatorApp = new ScientificCalculatorApp();
-            scientificCalculatorApp.ScientificDisplay(gridPane,displayField);
-            
-         });
-         menuItemMasses.setOnAction(e -> {
-            String masses[] ={ "Kilogrammes", "Grammes", "Livres","Onces" };
-            ConversionDisplay.display(masses,gridPane,displayField,primaryStage);
-        });
-        menuItemLongueur.setOnAction(e -> {
-            String longueurs[] ={ "Centimètres", "Pouces", "Mètres", "Pieds" };
-            ConversionDisplay.display(longueurs,gridPane,displayField,primaryStage);
-        });
-        menuItemTemperature.setOnAction(e -> {
-            String temperature[] ={ "Celsius", "Fahrenheit", "Kelvin" };
-            ConversionDisplay.display(temperature,gridPane,displayField,primaryStage);
-        });
-        menuItemVolumes.setOnAction(e -> {
-            String volumes[] ={ "Litres", "Gallons", "Mètres cubes", "Pieds cubes" };
-            ConversionDisplay.display(volumes,gridPane,displayField,primaryStage);
-        });
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setHgap(10);
         gridPane.setVgap(10);
@@ -207,24 +235,7 @@ public class BasicCalculatorApp extends Application {
         buttonAC.setOnAction(e -> MainController.ResetAllClear(displayField));
 
         // Création de la scène
-        Group root = new Group(vBox,gridPane);
-        Scene scene = new Scene(root);
-
-        // Appliquer la scène à la fenêtre principale
-        primaryStage.setScene(scene);
-        primaryStage.show();   
-    }
-
-    // Méthode utilitaire pour créer un bouton avec un texte spécifique
-    private Button createButton(String text) {
-        Button button = new Button(text);
-        button.setPrefSize(70, 30);
-        return button;
-    }
-
-    // Méthode pour ajouter du texte au champ d'affichage
-    private void appendToDisplay(String text) {
-        displayField.setText(displayField.getText() + text);
+        
     }
     
 
