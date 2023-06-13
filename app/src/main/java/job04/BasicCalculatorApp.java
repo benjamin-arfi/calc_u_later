@@ -1,7 +1,9 @@
 package job04;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -27,6 +29,9 @@ public class BasicCalculatorApp extends Application {
     private TextField displayField;
     private TextField memoryField;
     private List<String> historiqueCalculs;
+    private Map<String, Double> variables = new HashMap<>();
+    private TextField variableNameField;
+
     
 
     @Override
@@ -43,6 +48,8 @@ public class BasicCalculatorApp extends Application {
         memoryField = new TextField();
         memoryField.setPrefWidth(100);
         memoryField.setEditable(false);
+        variableNameField = new TextField();
+        variableNameField.setPromptText("Variable name");
 
         // Initialisation de l'historique des calculs
         historiqueCalculs = new ArrayList<>();
@@ -78,6 +85,7 @@ public class BasicCalculatorApp extends Application {
         Button buttonMemory = createButton("MS");
         Button buttonMemoryRead = createButton("MR");
         Button buttonMemoryClear = createButton("MC");
+        Button saveVariableButton = createButton("Save Variable");
 
         // Configuration de la disposition en grille
         GridPane gridPane = new GridPane();
@@ -165,6 +173,8 @@ public class BasicCalculatorApp extends Application {
         gridPane.add(buttonMemoryClear ,2,5 );
         gridPane.add(memoryField, 4, 0);
         gridPane.add(historiqueListView, 5, 0, 1, 7);
+        gridPane.add(variableNameField, 0, 6, 2, 1);
+        gridPane.add(saveVariableButton, 2, 6);
 
 
         // Gestion des événements des boutons
@@ -205,18 +215,32 @@ public class BasicCalculatorApp extends Application {
         buttonMemoryClear.setOnAction(e -> MemorySave.memoryClear(memoryField));
         buttonC.setOnAction(e -> MainController.ResetActualNumber(displayField));
         buttonAC.setOnAction(e -> MainController.ResetAllClear(displayField));
-     historiqueListView.setOnMouseClicked(event -> {
-    String calculSelectionne = historiqueListView.getSelectionModel().getSelectedItem();
-    if (calculSelectionne != null) {
-        String[] parts = calculSelectionne.split(" = ");
-        if (parts.length == 2) {
-            String calcul = parts[0];
-            String resultat = parts[1];
-            displayField.setText(calcul);
-        }
-    }
-});
+        historiqueListView.setOnMouseClicked(event -> {
+        String calculSelectionne = historiqueListView.getSelectionModel().getSelectedItem();
+        if (calculSelectionne != null) {
+            String[] parts = calculSelectionne.split(" = ");
+            if (parts.length == 2) {
+                String calcul = parts[0];
+                String resultat = parts[1];
+                displayField.setText(resultat);
+                displayField.setText(calcul);
+                }
+            }
+        });
 
+        saveVariableButton.setOnAction(e -> {
+            String variableName = variableNameField.getText();
+            String valueText = displayField.getText();
+            if (!variableName.isEmpty() && !valueText.isEmpty()) {
+            try {
+                double value = Double.parseDouble(valueText);
+                variables.put(variableName, value);
+            } catch (NumberFormatException ex) {
+                // Gérer une erreur de format de valeur ici
+            }
+            }
+        });
+        
         // Création de la scène
         Group root = new Group(vBox,gridPane);
         Scene scene = new Scene(root);

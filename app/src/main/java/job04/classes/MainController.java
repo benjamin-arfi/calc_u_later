@@ -9,6 +9,8 @@ public class MainController {
 	private static double operand;
 	private static double result;
 
+	
+
 	public static void handleOperatorClick(String operator,TextField displayField) {
 		operand1 = Double.parseDouble(displayField.getText());
 		signoperator = operator;
