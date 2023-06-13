@@ -97,7 +97,7 @@ public class BasicCalculatorApp extends Application {
          });
         menuItemScientificCalculator.setOnAction(e -> {
             ScientificCalculatorApp scientificCalculatorApp = new ScientificCalculatorApp();
-            scientificCalculatorApp.ScientificDisplay(gridPane,displayField);
+            scientificCalculatorApp.ScientificDisplay(gridPane,displayField,historiqueListView,historiqueCalculs);
             
          });
         gridPane.setAlignment(Pos.CENTER);
@@ -175,6 +175,17 @@ public class BasicCalculatorApp extends Application {
         buttonMemoryClear.setOnAction(e -> MemorySave.memoryClear(memoryField));
         buttonC.setOnAction(e -> MainController.ResetActualNumber(displayField));
         buttonAC.setOnAction(e -> MainController.ResetAllClear(displayField));
+     historiqueListView.setOnMouseClicked(event -> {
+    String calculSelectionne = historiqueListView.getSelectionModel().getSelectedItem();
+    if (calculSelectionne != null) {
+        String[] parts = calculSelectionne.split(" = ");
+        if (parts.length == 2) {
+            String calcul = parts[0];
+            String resultat = parts[1];
+            displayField.setText(calcul);
+        }
+    }
+});
 
         // Création de la scène
         Group root = new Group(vBox,gridPane);
