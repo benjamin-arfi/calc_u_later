@@ -32,7 +32,7 @@ javafx{
 }
 application {
     // Define the main class for the application.
-    mainClass = 'job04.CaculatorApp'
+    mainClass = 'job04.MainApp'
 }
 
 tasks.named('test') {

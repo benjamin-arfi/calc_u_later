@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "BasicCalculatorApp",
+            "request": "launch",
+            "mainClass": "job04.BasicCalculatorApp",
+            "projectName": "app"
+        },
+        {
+            "type": "java",
             "name": "CaculatorApp",
             "request": "launch",
             "mainClass": "job04.CaculatorApp",
