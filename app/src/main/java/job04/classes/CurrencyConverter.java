@@ -37,6 +37,7 @@ public class CurrencyConverter {
     public static double getCurrencyValue(String from,String to) {
         Map<String, Object> test = null;
         List<Double> result= new ArrayList<Double>();
+        List<Double> noDoll= new ArrayList<Double>(2);
         try (FileReader reader = new FileReader(DEVISE_FILE)) {
             JSONParser parser = new JSONParser();
             JSONObject jsonObject = (JSONObject) parser.parse(reader);
@@ -46,8 +47,15 @@ public class CurrencyConverter {
                         result.add((double)v);
                     }else if(k.equals(to+from)){
                         result.add(1/((double)v));
+                    }else if(k.equals("doll"+to)){
+                        noDoll.add((double)v);
+                    }else if(k.equals("doll"+from)){
+                        noDoll.add(1/(double)v);
                     }
-                });    
+                });
+            if (result.size()==0){
+                result.add(noDoll.get(0)*noDoll.get(1));
+            }
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
