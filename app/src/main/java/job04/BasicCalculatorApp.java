@@ -19,6 +19,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import job04.classes.CalculationResult;
+import job04.classes.ConversionDisplay;
 import job04.classes.MainController;
 import job04.classes.MemorySave;
 public class BasicCalculatorApp extends Application {
@@ -31,6 +32,9 @@ public class BasicCalculatorApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Calculatrice");
+        
+        
+        
 
         // Création du champ d'affichage
         displayField = new TextField();
@@ -79,12 +83,22 @@ public class BasicCalculatorApp extends Application {
         GridPane gridPane = new GridPane();
         //création du menu
         MenuBar menuBar = new MenuBar();
+        
         VBox vBox = new VBox(menuBar);        
         Menu menuFile = new Menu("Calculator sort");
          MenuItem menuItemBasicCalculator = new MenuItem("Basic Calculator");
          MenuItem menuItemScientificCalculator = new MenuItem("Scientific Calculator");
          menuFile.getItems().addAll(menuItemBasicCalculator, menuItemScientificCalculator);
-         menuBar.getMenus().add(menuFile);
+         Menu convertMenu = new Menu("Convert");
+
+        MenuItem menuItemMasses = new MenuItem("Masses");
+        MenuItem menuItemLongueur = new MenuItem("Longueur");
+        MenuItem menuItemTemperature = new MenuItem("Temperature");
+        MenuItem menuItemVolumes = new MenuItem("Volumes");
+        
+
+        convertMenu.getItems().addAll(menuItemMasses,menuItemLongueur,menuItemTemperature,menuItemVolumes);
+        menuBar.getMenus().addAll(menuFile,convertMenu);
  
  
          // Gestion des événements du menu
@@ -100,6 +114,22 @@ public class BasicCalculatorApp extends Application {
             scientificCalculatorApp.ScientificDisplay(gridPane,displayField);
             
          });
+         menuItemMasses.setOnAction(e -> {
+            String masses[] ={ "Kilogrammes", "Grammes", "Livres","Onces" };
+            ConversionDisplay.display(masses,gridPane,displayField,primaryStage);
+        });
+        menuItemLongueur.setOnAction(e -> {
+            String longueurs[] ={ "Centimètres", "Pouces", "Mètres", "Pieds" };
+            ConversionDisplay.display(longueurs,gridPane,displayField,primaryStage);
+        });
+        menuItemTemperature.setOnAction(e -> {
+            String temperature[] ={ "Celsius", "Fahrenheit", "Kelvin" };
+            ConversionDisplay.display(temperature,gridPane,displayField,primaryStage);
+        });
+        menuItemVolumes.setOnAction(e -> {
+            String volumes[] ={ "Litres", "Gallons", "Mètres cubes", "Pieds cubes" };
+            ConversionDisplay.display(volumes,gridPane,displayField,primaryStage);
+        });
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setHgap(10);
         gridPane.setVgap(10);

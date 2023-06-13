@@ -30,6 +30,10 @@ public class ConversionDisplay {
         gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 1 && GridPane.getRowIndex(node) == 4);
         gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 5 && GridPane.getRowIndex(node) == 0);
         gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 5 && GridPane.getRowIndex(node) == 6);
+        gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 0 && GridPane.getRowIndex(node) == 5);
+        gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 1 && GridPane.getRowIndex(node) == 5);
+        gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 2 && GridPane.getRowIndex(node) == 5);
+        gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 3 && GridPane.getRowIndex(node) == 5);
  
         // Create a combo box
         ComboBox<String> fromUnit =new ComboBox<String>(FXCollections.observableArrayList(types));
