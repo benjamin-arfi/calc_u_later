@@ -250,7 +250,7 @@ public class BasicCalculatorApp extends Application {
         if (parts.length == 2) {
             String calcul = parts[0];
             String resultat = parts[1];
-            displayField.setText(calcul);
+            displayField.setText(resultat);
         }
     }
 });
