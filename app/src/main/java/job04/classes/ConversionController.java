@@ -203,6 +203,9 @@ public class ConversionController {
                     break;
                 }
                 break;
+            default:
+                result =Math.round(operand1*CurrencyConverter.getCurrencyValue(from,to)*1000.0)/1000.0;
+                break;
         }
 		
 		resultField.setText(String.valueOf(result));

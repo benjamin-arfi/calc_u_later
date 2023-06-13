@@ -2,6 +2,7 @@ package job04;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -21,6 +22,7 @@ import javafx.stage.Stage;
 import job04.classes.CalculationResult;
 import job04.classes.ConversionDisplay;
 import job04.classes.MainController;
+import job04.classes.CurrencyConverter;
 import job04.classes.MemorySave;
 public class BasicCalculatorApp extends Application {
 
@@ -48,9 +50,10 @@ public class BasicCalculatorApp extends Application {
         MenuItem menuItemLongueur = new MenuItem("Longueur");
         MenuItem menuItemTemperature = new MenuItem("Temperature");
         MenuItem menuItemVolumes = new MenuItem("Volumes");
+        MenuItem menuItemCurrency = new MenuItem("Currency");
         
 
-        convertMenu.getItems().addAll(menuItemMasses,menuItemLongueur,menuItemTemperature,menuItemVolumes);
+        convertMenu.getItems().addAll(menuItemMasses,menuItemLongueur,menuItemTemperature,menuItemVolumes,menuItemCurrency);
         menuBar.getMenus().addAll(menuFile,convertMenu);
  
  
@@ -91,6 +94,13 @@ public class BasicCalculatorApp extends Application {
             gridPane.getChildren().clear();
             addDisplay(primaryStage,gridPane);
             ConversionDisplay.display(volumes,gridPane,displayField,primaryStage);
+        });
+        menuItemCurrency.setOnAction(e -> {
+            String currency[] = CurrencyConverter.readCurrency();
+            
+            gridPane.getChildren().clear();
+            addDisplay(primaryStage,gridPane);
+            ConversionDisplay.display(currency,gridPane,displayField,primaryStage);
         });
         addDisplay(primaryStage, gridPane);
 
