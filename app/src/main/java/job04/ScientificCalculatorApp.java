@@ -25,7 +25,7 @@ public class ScientificCalculatorApp  {
 
     
     }
-    public void ScientificDisplay(GridPane gridPane,TextField displayField,ListView<String> historiqueListView,List<String> historiqueCalculs ) {
+    public void ScientificDisplay(GridPane gridPane,TextField displayField,List<String> historiqueCalculs,ListView<String> historiqueListView) {
 
         gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 4 && GridPane.getRowIndex(node) == 3);
         gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 4 && GridPane.getRowIndex(node) == 2);
