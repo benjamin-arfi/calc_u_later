@@ -13,9 +13,6 @@ import job04.classes.MainController;
 
 public class ScientificCalculatorApp  {
     
-    List<String> historiqueCalculs = new ArrayList<>();
-    ListView<String> historiqueListView = new ListView<>();
-    
     public static void BasicDisplay(GridPane gridPane,TextField displayField) {
 
         gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 4 && GridPane.getRowIndex(node) == 3);
@@ -29,7 +26,7 @@ public class ScientificCalculatorApp  {
 
     
     }
-    public void ScientificDisplay(GridPane gridPane,TextField displayField) {
+    public void ScientificDisplay(GridPane gridPane,TextField displayField,ListView historiqueListView,List historiqueCalculs ) {
 
         gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 4 && GridPane.getRowIndex(node) == 3);
         gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 4 && GridPane.getRowIndex(node) == 2);
