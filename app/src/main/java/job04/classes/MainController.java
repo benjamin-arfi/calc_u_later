@@ -1,7 +1,8 @@
 package job04.classes;
-
 import javafx.scene.control.TextField;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MainController {
@@ -11,6 +12,17 @@ public class MainController {
     private static double operand;
     private static double result;
     private static Map<String, Double> variables = new HashMap<>();
+    private static List<String> variableList = new ArrayList<>();
+
+    public static void saveVariable(String variableName, double value) {
+        variables.put(variableName, value); // Ajouter la variable à la liste des variables
+        variableList.add(variableName);
+    }
+
+    public static void handleVariableClick(String variableName, TextField displayField) {
+        double variableValue = getVariableValue(variableName);
+        displayField.setText(String.valueOf(variableValue));
+    }
 
     public static void handleOperatorClick(String operator, TextField displayField) {
         operand1 = Double.parseDouble(displayField.getText());
@@ -86,11 +98,7 @@ public class MainController {
         double value = 0.0;
         if (operand.startsWith("$")) {
             String variableName = operand.substring(1); // Ignorer le préfixe "$"
-            if (variables.containsKey(variableName)) {
-                value = variables.get(variableName);
-            } else {
-                // Gérer le cas où la variable n'existe pas ici
-            }
+            value = getVariableValue(variableName);
         } else {
             try {
                 value = Double.parseDouble(operand);
@@ -99,5 +107,18 @@ public class MainController {
             }
         }
         return value;
+    }
+
+    private static double getVariableValue(String variableName) {
+        if (variables.containsKey(variableName)) {
+            return variables.get(variableName);
+        } else {
+            // Gérer le cas où la variable n'existe pas ici
+            return 0.0; // Valeur par défaut si la variable n'existe pas
+        }
+    }
+
+    public static List<String> getVariableList() {
+        return variableList;
     }
 }

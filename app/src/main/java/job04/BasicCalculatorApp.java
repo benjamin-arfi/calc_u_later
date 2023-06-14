@@ -30,8 +30,9 @@ public class BasicCalculatorApp extends Application {
     private TextField displayField;
     private TextField memoryField;
     
-    private Map<String, Double> variables = new HashMap<>();
+    private static Map<String, Double> variables = new HashMap<>();
     private TextField variableNameField;
+    private static List<String> variableNames = new ArrayList<>();
 
     private List<String> historiqueCalculs = new ArrayList<>();;
     private ListView<String> historiqueListView = new ListView<>();
@@ -268,25 +269,43 @@ public class BasicCalculatorApp extends Application {
             displayField.setText(resultat);
         }
     }
-});
+    });
 
 
-        saveVariableButton.setOnAction(e -> {
+    saveVariableButton.setOnAction(e -> {
             String variableName = variableNameField.getText();
             String valueText = displayField.getText();
+            Double value = Double.parseDouble(displayField.getText());
             if (!variableName.isEmpty() && !valueText.isEmpty()) {
             try {
-                double value = Double.parseDouble(valueText);
-                variables.put(variableName, value);
+                variables.put(variableName, value); // Ajouter la variable à la liste des variables
+                variableNames.add(variableName);
             } catch (NumberFormatException ex) {
                 // Gérer une erreur de format de valeur ici
             }
             }
         });
-        
-        
     }
     
+    public static void addToVariables(String variableName, double value) {
+        variables.put(variableName, value); // Ajouter la variable à la liste des variables
+        variableNames.add(variableName);
+    }
+
+    public static double getVariableValue(String variableName) {
+        if (variables.containsKey(variableName)) {
+            return variables.get(variableName); // Récupérer la valeur de la variable
+        } else {
+            // Gérer le cas où la variable n'existe pas ici
+            // Vous pouvez afficher un message d'erreur ou effectuer une autre action appropriée
+            return 0.0; // Retourner une valeur par défaut
+        }
+    }
+
+    public static void handleVariableClick(String variableName, TextField displayField) {
+        double variableValue = getVariableValue(variableName);
+        displayField.setText(String.valueOf(variableValue));
+    }
 
     public static void main(String[] args) {
         launch();
