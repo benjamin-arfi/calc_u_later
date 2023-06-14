@@ -1,4 +1,5 @@
 package job04.classes;
+
 import javafx.scene.control.TextField;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,11 +13,21 @@ public class MainController {
     private static double operand;
     private static double result;
     private static Map<String, Double> variables = new HashMap<>();
-    private static List<String> variableList = new ArrayList<>();
+    private static List<String> variableNames = new ArrayList<>();
 
-    public static void saveVariable(String variableName, double value) {
+    public static void addToVariables(String variableName, double value) {
         variables.put(variableName, value); // Ajouter la variable à la liste des variables
-        variableList.add(variableName);
+        variableNames.add(variableName);
+    }
+
+    public static double getVariableValue(String variableName) {
+        if (variables.containsKey(variableName)) {
+            return variables.get(variableName); // Récupérer la valeur de la variable
+        } else {
+            // Gérer le cas où la variable n'existe pas ici
+            // Vous pouvez afficher un message d'erreur ou effectuer une autre action appropriée
+            return 0.0; // Retourner une valeur par défaut
+        }
     }
 
     public static void handleVariableClick(String variableName, TextField displayField) {
@@ -107,18 +118,5 @@ public class MainController {
             }
         }
         return value;
-    }
-
-    private static double getVariableValue(String variableName) {
-        if (variables.containsKey(variableName)) {
-            return variables.get(variableName);
-        } else {
-            // Gérer le cas où la variable n'existe pas ici
-            return 0.0; // Valeur par défaut si la variable n'existe pas
-        }
-    }
-
-    public static List<String> getVariableList() {
-        return variableList;
     }
 }

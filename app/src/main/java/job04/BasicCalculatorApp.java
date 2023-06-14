@@ -33,6 +33,7 @@ public class BasicCalculatorApp extends Application {
     private static Map<String, Double> variables = new HashMap<>();
     private TextField variableNameField;
     private static List<String> variableNames = new ArrayList<>();
+    private ListView<String> varListView = new ListView<>();
 
     private List<String> historiqueCalculs = new ArrayList<>();;
     private ListView<String> historiqueListView = new ListView<>();
@@ -217,6 +218,7 @@ public class BasicCalculatorApp extends Application {
         gridPane.add(historiqueListView, 5, 0, 1, 7);
         gridPane.add(variableNameField, 0, 6, 2, 1);
         gridPane.add(saveVariableButton, 2, 6);
+        gridPane.add(varListView, 6, 0, 1, 3);
 
 
         // Gestion des événements des boutons
@@ -275,15 +277,9 @@ public class BasicCalculatorApp extends Application {
     saveVariableButton.setOnAction(e -> {
             String variableName = variableNameField.getText();
             String valueText = displayField.getText();
-            Double value = Double.parseDouble(displayField.getText());
-            if (!variableName.isEmpty() && !valueText.isEmpty()) {
-            try {
-                variables.put(variableName, value); // Ajouter la variable à la liste des variables
-                variableNames.add(variableName);
-            } catch (NumberFormatException ex) {
-                // Gérer une erreur de format de valeur ici
-            }
-            }
+            String Value = variableName + "=" + valueText;
+            variableNames.add(Value);
+            varListView.setItems(FXCollections.observableArrayList(variableNames));
         });
     }
     
