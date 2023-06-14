@@ -277,7 +277,7 @@ public class BasicCalculatorApp extends Application {
     saveVariableButton.setOnAction(e -> {
             String variableName = variableNameField.getText();
             String valueText = displayField.getText();
-            String Value = variableName + "=" + valueText;
+            String Value = variableName + " = " + valueText;
             variableNames.add(Value);
             varListView.setItems(FXCollections.observableArrayList(variableNames));
     });
@@ -287,8 +287,7 @@ public class BasicCalculatorApp extends Application {
     String varSelectionne = varListView.getSelectionModel().getSelectedItem();
     if (varSelectionne != null) {
         String[] parts = varSelectionne.split(" = ");
-        if (parts.length == 1) {
-            String calcul = parts[0];
+        if (parts.length == 2) {
             String res = parts[1];
             displayField.setText(res);
         }
