@@ -28,16 +28,13 @@ public class BasicCalculatorApp extends Application {
 
     private TextField displayField;
     private TextField memoryField;
-<<<<<<< HEAD
-    private List<String> historiqueCalculs;
+    
     private Map<String, Double> variables = new HashMap<>();
     private TextField variableNameField;
 
-    
-=======
     private List<String> historiqueCalculs = new ArrayList<>();;
     private ListView<String> historiqueListView = new ListView<>();
->>>>>>> main
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -155,6 +152,7 @@ public class BasicCalculatorApp extends Application {
         Button buttonEquals = createButton("=");
         Button buttonMultiply = createButton("*");
         Button buttonDivide = createButton("/");
+        Button buttonpoint = createButton(".");
         
         Button buttonC = createButton("C");
         Button buttonAC = createButton("AC");
@@ -192,6 +190,7 @@ public class BasicCalculatorApp extends Application {
         gridPane.add(button7, 0, 3);
         gridPane.add(button8, 1, 3);
         gridPane.add(button9, 2, 3);
+        gridPane.add(buttonpoint,4,4);
         gridPane.add(buttonMultiply, 3, 3);
         gridPane.add(button0, 0, 4);
         gridPane.add(buttonEquals, 1, 4);
@@ -221,6 +220,7 @@ public class BasicCalculatorApp extends Application {
         button8.setOnAction(e -> appendToDisplay("8"));
         button9.setOnAction(e -> appendToDisplay("9"));
         button0.setOnAction(e -> appendToDisplay("0"));
+        buttonpoint.setOnAction(e -> appendToDisplay("."));
 
         buttonAdd.setOnAction(e -> MainController.handleOperatorClick("+",displayField));
         buttonSubtract.setOnAction(e -> MainController.handleOperatorClick("-",displayField));
@@ -248,20 +248,7 @@ public class BasicCalculatorApp extends Application {
         buttonMemoryClear.setOnAction(e -> MemorySave.memoryClear(memoryField));
         buttonC.setOnAction(e -> MainController.ResetActualNumber(displayField));
         buttonAC.setOnAction(e -> MainController.ResetAllClear(displayField));
-<<<<<<< HEAD
-        historiqueListView.setOnMouseClicked(event -> {
-        String calculSelectionne = historiqueListView.getSelectionModel().getSelectedItem();
-        if (calculSelectionne != null) {
-            String[] parts = calculSelectionne.split(" = ");
-            if (parts.length == 2) {
-                String calcul = parts[0];
-                String resultat = parts[1];
-                displayField.setText(resultat);
-                displayField.setText(calcul);
-                }
-            }
-        });
-=======
+
      historiqueListView.setOnMouseClicked(event -> {
     String calculSelectionne = historiqueListView.getSelectionModel().getSelectedItem();
     if (calculSelectionne != null) {
@@ -273,7 +260,7 @@ public class BasicCalculatorApp extends Application {
         }
     }
 });
->>>>>>> main
+
 
         saveVariableButton.setOnAction(e -> {
             String variableName = variableNameField.getText();
@@ -288,7 +275,6 @@ public class BasicCalculatorApp extends Application {
             }
         });
         
-        // Création de la scène
         
     }
     
