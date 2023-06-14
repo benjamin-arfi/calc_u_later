@@ -1,10 +1,7 @@
 package job04.classes;
 
 import javafx.scene.control.TextField;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 
 public class MainController {
     private static double operand1;
@@ -12,28 +9,6 @@ public class MainController {
     private static double operand2;
     private static double operand;
     private static double result;
-    private static Map<String, Double> variables = new HashMap<>();
-    private static List<String> variableNames = new ArrayList<>();
-
-    public static void addToVariables(String variableName, double value) {
-        variables.put(variableName, value); // Ajouter la variable à la liste des variables
-        variableNames.add(variableName);
-    }
-
-    public static double getVariableValue(String variableName) {
-        if (variables.containsKey(variableName)) {
-            return variables.get(variableName); // Récupérer la valeur de la variable
-        } else {
-            // Gérer le cas où la variable n'existe pas ici
-            // Vous pouvez afficher un message d'erreur ou effectuer une autre action appropriée
-            return 0.0; // Retourner une valeur par défaut
-        }
-    }
-
-    public static void handleVariableClick(String variableName, TextField displayField) {
-        double variableValue = getVariableValue(variableName);
-        displayField.setText(String.valueOf(variableValue));
-    }
 
     public static void handleOperatorClick(String operator, TextField displayField) {
         operand1 = Double.parseDouble(displayField.getText());
@@ -47,7 +22,7 @@ public class MainController {
 
     // Méthode pour effectuer le calcul et afficher le résultat
     public static CalculationResult calculateResult(TextField displayField) {
-        operand2 = getOperandValue(displayField.getText());
+        operand2 = Double.parseDouble(displayField.getText());
         result = 0;
 
         if (signoperator.equals("+")) {
@@ -105,18 +80,4 @@ public class MainController {
         displayField.clear();
     }
 
-    private static double getOperandValue(String operand) {
-        double value = 0.0;
-        if (operand.startsWith("$")) {
-            String variableName = operand.substring(1); // Ignorer le préfixe "$"
-            value = getVariableValue(variableName);
-        } else {
-            try {
-                value = Double.parseDouble(operand);
-            } catch (NumberFormatException ex) {
-                // Gérer une erreur de format de valeur ici
-            }
-        }
-        return value;
-    }
 }

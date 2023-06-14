@@ -280,28 +280,20 @@ public class BasicCalculatorApp extends Application {
             String Value = variableName + "=" + valueText;
             variableNames.add(Value);
             varListView.setItems(FXCollections.observableArrayList(variableNames));
-        });
-    }
+    });
     
-    public static void addToVariables(String variableName, double value) {
-        variables.put(variableName, value); // Ajouter la variable à la liste des variables
-        variableNames.add(variableName);
-    }
-
-    public static double getVariableValue(String variableName) {
-        if (variables.containsKey(variableName)) {
-            return variables.get(variableName); // Récupérer la valeur de la variable
-        } else {
-            // Gérer le cas où la variable n'existe pas ici
-            // Vous pouvez afficher un message d'erreur ou effectuer une autre action appropriée
-            return 0.0; // Retourner une valeur par défaut
+    
+    varListView.setOnMouseClicked(event -> {
+    String varSelectionne = varListView.getSelectionModel().getSelectedItem();
+    if (varSelectionne != null) {
+        String[] parts = varSelectionne.split(" = ");
+        if (parts.length == 1) {
+            String calcul = parts[0];
+            String res = parts[1];
+            displayField.setText(res);
         }
     }
-
-    public static void handleVariableClick(String variableName, TextField displayField) {
-        double variableValue = getVariableValue(variableName);
-        displayField.setText(String.valueOf(variableValue));
-    }
+    });}
 
     public static void main(String[] args) {
         launch();
