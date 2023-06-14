@@ -1,9 +1,7 @@
 package job04;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -30,7 +28,6 @@ public class BasicCalculatorApp extends Application {
     private TextField displayField;
     private TextField memoryField;
     
-    private static Map<String, Double> variables = new HashMap<>();
     private TextField variableNameField;
     private static List<String> variableNames = new ArrayList<>();
     private ListView<String> varListView = new ListView<>();
@@ -274,7 +271,19 @@ public class BasicCalculatorApp extends Application {
                 String variableName = variableNameField.getText();
                 String valueText = displayField.getText();
                 String Value = variableName + " = " + valueText;
-                variableNames.add(Value);
+                int i=0;
+                boolean find=false;
+                for (String element : variableNames){
+                    if (element.split(" = ")[0].equals(variableName)){
+                        variableNames.set(i,Value);
+                        find=true;
+                        System.out.println("test");
+                    }
+                    i++;
+                }
+                if(!find){
+                    variableNames.add(Value);
+                }
                 varListView.setItems(FXCollections.observableArrayList(variableNames));
         });
     
