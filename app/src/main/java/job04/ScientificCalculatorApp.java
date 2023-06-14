@@ -12,26 +12,14 @@ import job04.classes.MainController;
 
 public class ScientificCalculatorApp  {
     
-    public static void BasicDisplay(GridPane gridPane,TextField displayField) {
-
-        gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 4 && GridPane.getRowIndex(node) == 3);
-        gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 4 && GridPane.getRowIndex(node) == 2);
-        gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 4 && GridPane.getRowIndex(node) == 1);
-        gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 4 && GridPane.getRowIndex(node) == 4);
-        gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 4 && GridPane.getRowIndex(node) == 5);
-        gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 5 && GridPane.getRowIndex(node) == 1);
-        gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 5 && GridPane.getRowIndex(node) == 2);
-         gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 6 && GridPane.getRowIndex(node) == 0);
-
-    
-    }
-    public void ScientificDisplay(GridPane gridPane,TextField displayField,List<String> historiqueCalculs,ListView<String> historiqueListView) {
+    public void ScientificDisplay(GridPane gridPane,TextField displayField,List<String> historiqueCalculs,ListView<String> historiqueListView,List<String> variableNames,ListView<String> varListView) {
 
         gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 4 && GridPane.getRowIndex(node) == 3);
         gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 4 && GridPane.getRowIndex(node) == 2);
         gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 4 && GridPane.getRowIndex(node) == 1);
         gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 5 && GridPane.getRowIndex(node) == 0);
-        // Création des boutons pour la calculatrice scientifique
+        gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 6 && GridPane.getRowIndex(node) == 0);
+         // Création des boutons pour la calculatrice scientifique
         Button sinButton = createButton("sin");
         Button cosButton = createButton("cos");
         Button tanButton = createButton("tan");
@@ -122,8 +110,9 @@ public class ScientificCalculatorApp  {
         gridPane.add(lnButton, 4, 4);
         gridPane.add(logButton, 4, 5);
         gridPane.add(sqrtButton, 5, 1);
-        gridPane.add(powButton, 5, 2);
+        gridPane.add(powButton, 5, 2);        
         gridPane.add(historiqueListView, 6, 0, 1, 7);
+        gridPane.add(varListView, 7, 0, 1, 7);
         
     }
 

@@ -44,6 +44,11 @@ public class BasicCalculatorApp extends Application {
         primaryStage.setTitle("Calculatrice");
         // Configuration de la disposition en grille
         GridPane gridPane = new GridPane();
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(10));
+        gridPane.setLayoutY(20);
         //création du menu
         MenuBar menuBar = new MenuBar();
         
@@ -75,7 +80,7 @@ public class BasicCalculatorApp extends Application {
             gridPane.getChildren().clear();
             addDisplay(primaryStage,gridPane);
             ScientificCalculatorApp scientificCalculatorApp = new ScientificCalculatorApp();
-            scientificCalculatorApp.ScientificDisplay(gridPane,displayField,historiqueCalculs,historiqueListView);
+            scientificCalculatorApp.ScientificDisplay(gridPane,displayField,historiqueCalculs,historiqueListView,variableNames,varListView);
             primaryStage.sizeToScene();
             
          });
@@ -177,15 +182,6 @@ public class BasicCalculatorApp extends Application {
         Button buttonMemoryRead = createButton("MR");
         Button buttonMemoryClear = createButton("MC");
         Button saveVariableButton = createButton("Save Variable");
-
-        
-        
-        gridPane.setAlignment(Pos.CENTER);
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(10));
-        gridPane.setLayoutY(20);
-
         
 
         // Ajout des boutons à la grille
@@ -218,7 +214,7 @@ public class BasicCalculatorApp extends Application {
         gridPane.add(historiqueListView, 5, 0, 1, 7);
         gridPane.add(variableNameField, 0, 6, 2, 1);
         gridPane.add(saveVariableButton, 2, 6);
-        gridPane.add(varListView, 6, 0, 1, 3);
+        gridPane.add(varListView, 6, 0, 1, 7);
 
 
         // Gestion des événements des boutons
@@ -249,7 +245,7 @@ public class BasicCalculatorApp extends Application {
 
         // Mettre à jour la ListView de l'historique des calculs
         historiqueListView.setItems(FXCollections.observableArrayList(historiqueCalculs));
-    });
+        });
         buttonMultiply.setOnAction(e -> MainController.handleOperatorClick("*",displayField));
         buttonDivide.setOnAction(e -> MainController.handleOperatorClick("/",displayField));
         buttonRebate.setOnAction(e -> MainController.handleOperatorClick("rebate %",displayField));
@@ -261,38 +257,39 @@ public class BasicCalculatorApp extends Application {
         buttonC.setOnAction(e -> MainController.ResetActualNumber(displayField));
         buttonAC.setOnAction(e -> MainController.ResetAllClear(displayField));
 
-     historiqueListView.setOnMouseClicked(event -> {
-    String calculSelectionne = historiqueListView.getSelectionModel().getSelectedItem();
-    if (calculSelectionne != null) {
-        String[] parts = calculSelectionne.split(" = ");
-        if (parts.length == 2) {
-            String calcul = parts[0];
-            String resultat = parts[1];
-            displayField.setText(resultat);
-        }
-    }
-    });
+        historiqueListView.setOnMouseClicked(event -> {
+            String calculSelectionne = historiqueListView.getSelectionModel().getSelectedItem();
+            if (calculSelectionne != null) {
+                String[] parts = calculSelectionne.split(" = ");
+                if (parts.length == 2) {
+                    String calcul = parts[0];
+                    String resultat = parts[1];
+                    displayField.setText(resultat);
+                }
+            }
+        });
 
 
-    saveVariableButton.setOnAction(e -> {
-            String variableName = variableNameField.getText();
-            String valueText = displayField.getText();
-            String Value = variableName + " = " + valueText;
-            variableNames.add(Value);
-            varListView.setItems(FXCollections.observableArrayList(variableNames));
-    });
+        saveVariableButton.setOnAction(e -> {
+                String variableName = variableNameField.getText();
+                String valueText = displayField.getText();
+                String Value = variableName + " = " + valueText;
+                variableNames.add(Value);
+                varListView.setItems(FXCollections.observableArrayList(variableNames));
+        });
     
     
-    varListView.setOnMouseClicked(event -> {
-    String varSelectionne = varListView.getSelectionModel().getSelectedItem();
-    if (varSelectionne != null) {
-        String[] parts = varSelectionne.split(" = ");
-        if (parts.length == 2) {
-            String res = parts[1];
-            displayField.setText(res);
-        }
+        varListView.setOnMouseClicked(event -> {
+            String varSelectionne = varListView.getSelectionModel().getSelectedItem();
+            if (varSelectionne != null) {
+                String[] parts = varSelectionne.split(" = ");
+                if (parts.length == 2) {
+                    String res = parts[1];
+                    displayField.setText(res);
+                }
+            }
+        });
     }
-    });}
 
     public static void main(String[] args) {
         launch();
