@@ -1,18 +1,14 @@
 package job04.classes;
-
 import javafx.scene.control.TextField;
 
 public class ConversionController {
     private static double operand1;
 
-	
 	public static void ResetActualNumber(TextField displayField) {
 		displayField.clear();
 	}
-	
-	
-	
-	// Méthode pour effectuer le calcul et afficher le résultat
+		
+	// Method to perform the calculation and display the result
 	public static void calculateResult(TextField displayField,TextField resultField,String from,String to) {
         operand1 = Double.parseDouble(displayField.getText());
         double result = Double.parseDouble(displayField.getText());

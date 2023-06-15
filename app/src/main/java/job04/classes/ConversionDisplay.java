@@ -1,5 +1,4 @@
 package job04.classes;
-
 import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -13,8 +12,6 @@ public class ConversionDisplay {
 
     public static void display(String[] types,GridPane gridPane,TextField displayField,Stage primaryStage){
         displayField.clear();
-        
-        
         gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 4 && GridPane.getRowIndex(node) == 0);
         gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 4 && GridPane.getRowIndex(node) == 1);
         gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 4 && GridPane.getRowIndex(node) == 2);
@@ -34,7 +31,11 @@ public class ConversionDisplay {
         gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 1 && GridPane.getRowIndex(node) == 5);
         gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 2 && GridPane.getRowIndex(node) == 5);
         gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 3 && GridPane.getRowIndex(node) == 5);
- 
+        gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 0 && GridPane.getRowIndex(node) == 6);
+        gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 2 && GridPane.getRowIndex(node) == 6);
+        gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 3 && GridPane.getRowIndex(node) == 6);
+        gridPane.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 6 && GridPane.getRowIndex(node) == 0);
+        
         // Create a combo box
         ComboBox<String> fromUnit =new ComboBox<String>(FXCollections.observableArrayList(types));
         ComboBox<String> toUnit =new ComboBox<String>(FXCollections.observableArrayList(types));
@@ -66,8 +67,5 @@ public class ConversionDisplay {
 
     private static void appendToDisplay(String text,TextField displayField) {
         displayField.setText(displayField.getText() + text);
-    }
-
-
-    
+    }   
 }

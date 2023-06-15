@@ -1,7 +1,5 @@
 package job04.classes;
-
 import javafx.scene.control.TextField;
-
 
 public class MainController {
     private static double operand1;
@@ -20,7 +18,7 @@ public class MainController {
         displayField.clear();
     }
 
-    // Méthode pour effectuer le calcul et afficher le résultat
+    // Method to perform the calculation and display the result
     public static CalculationResult calculateResult(TextField displayField) {
         operand2 = Double.parseDouble(displayField.getText());
         result = 0;
@@ -79,5 +77,4 @@ public class MainController {
         operand2 = 0;
         displayField.clear();
     }
-
 }

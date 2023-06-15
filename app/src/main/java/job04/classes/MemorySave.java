@@ -1,5 +1,4 @@
 package job04.classes;
-
 import javafx.scene.control.TextField;
 
 public class MemorySave {

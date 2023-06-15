@@ -6,7 +6,6 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        // Création de la calculatrice basique
         BasicCalculatorApp basicCalculatorApp = new BasicCalculatorApp();
         basicCalculatorApp.start(primaryStage);
     }

@@ -5,7 +5,6 @@ public class CalculationResultUnary {
         private String signOperator;
         private double result;
 
-
     public CalculationResultUnary (double operand1,double result, String signOperator) {
         this.operand1 = operand1;
         this.signOperator = signOperator;
